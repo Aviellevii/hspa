@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HouseService } from 'src/app/Services/house.service';
 
 @Component({
@@ -9,7 +10,10 @@ import { HouseService } from 'src/app/Services/house.service';
 export class PropertyListComponent {
 
   properties:Array<any>=[]
-  constructor(houseService:HouseService){
-    this.properties = houseService.GetAllHouse();
-  }
+  constructor(houseService:HouseService,route:ActivatedRoute){
+      if(route.snapshot.url.toString())
+      this.properties = houseService.SellOrRent(2);
+      else
+      this.properties = houseService.SellOrRent(1);
+      }
 }

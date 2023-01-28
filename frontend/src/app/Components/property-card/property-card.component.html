@@ -1,5 +1,11 @@
 <div class="card">
-    <img src="../../../assets/house_default.png" alt="" class="propImg">
+    <img *ngIf="property.Image" src="../../../assets/{{property.Image}}.png" alt="" class="propImg">
+    <img *ngIf="!property.Image" src="../../../assets/house_default.png" alt="" class="propImg">
+
+    <div class="d-flex justify-content-center mt-2">
+        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-primary ms-2" routerLink="property-details/{{property.Id}}"><i class="fas fa-edit"></i></button>
+    </div>
     <div class="card-body p-2">
         <h1>{{property.Name}}</h1>
         <h2>{{property.Type}}</h2>
