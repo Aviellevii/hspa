@@ -14,4 +14,7 @@ export class HouseService {
   SellOrRent(SR:number){
     return this.GetAllHouse().filter(house=>house.SellRent === SR);
   }
+  GetHouseById(id:number){
+    return this.GetAllHouse().find(house=>house.Id == id);
+  }
 }

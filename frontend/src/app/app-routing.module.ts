@@ -11,6 +11,7 @@ const routes: Routes = [
   {path:'rent',component:PropertyListComponent},
   {path:'add-property',component:AddPropertyComponent},
   {path:'property-details/:id',component:PropertyDetailsComponent},
+  {path:'rent/property-details/:id',component:PropertyDetailsComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
 
