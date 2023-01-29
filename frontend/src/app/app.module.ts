@@ -17,6 +17,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+import { SortPipe } from './Pipe/sort.pipe';
+import { FilterPipe } from './Pipe/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
     PropertyDetailsComponent,
     AddPropertyComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SortPipe,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
