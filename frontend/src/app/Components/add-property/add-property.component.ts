@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IPropertyBase } from 'src/app/model/ipropertyBase';
+import { HouseService } from 'src/app/Services/house.service';
 
 @Component({
   selector: 'app-add-property',
@@ -11,6 +12,7 @@ import { IPropertyBase } from 'src/app/model/ipropertyBase';
 export class AddPropertyComponent {
   @ViewChild('formTabs') formTabs!: TabsetComponent;
   addProp!:FormGroup;
+  cities!:any[];
   propertyView:IPropertyBase={
     Id: 0,
     SellRent: 0,
@@ -26,7 +28,10 @@ export class AddPropertyComponent {
   }
   propertyTypes:Array<string>=["House","APARTMET","Duplex"];
   furnishType:Array<string>=["Fully","Semi","Unfurnished"];
-  constructor(fb:FormBuilder){
+  constructor(fb:FormBuilder,houseService:HouseService){
+    houseService.GetAllCities().subscribe((cities)=>{
+      this.cities = cities
+    })
     this.addProp = fb.group({
       BasicInfo: fb.group({
           SellRent: ['1' , Validators.required],

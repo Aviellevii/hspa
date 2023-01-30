@@ -76,10 +76,15 @@
 
                 <div class="form-group col-12">
                   <label>City</label>
-                  <input #City
-                  (keyup)="propertyView.City=City.value"
+                  <select #City
+                  (click)="propertyView.City=City.value"
                   class="form-control"
-                  formControlName="City"/>
+                  formControlName="City">
+                  <option value=''>--Select City--</option>
+                  <option *ngFor="let city of cities" value={{city.name}}>
+                    {{city.name}}
+                  </option>
+                  </select>
            
                 </div>
 
