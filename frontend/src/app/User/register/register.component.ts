@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AccountService } from 'src/app/Services/account.service';
 
 @Component({
   selector: 'app-register',
@@ -9,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent {
   registerForm!:FormGroup;
 
-  constructor(fb:FormBuilder){
+  constructor(fb:FormBuilder,private accountService:AccountService,private router:Router){
     this.registerForm = fb.group({
       Name:['',Validators.required],
       Email:['',Validators.required],
@@ -23,7 +25,9 @@ export class RegisterComponent {
     return this.registerForm.controls;
   }
   register(){
-    console.log(`the name is ${this.fc.Name.value}`)
+    this.accountService.register({username:this.registerForm.value.Email,password:this.registerForm.value.Password}).subscribe(()=>{
+      this.router.navigateByUrl('/login');
+    })
   }
   cancel(){
     this.registerForm.reset();

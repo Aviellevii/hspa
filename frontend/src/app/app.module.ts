@@ -19,6 +19,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { SortPipe } from './Pipe/sort.pipe';
 import { FilterPipe } from './Pipe/filter.pipe';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { FilterPipe } from './Pipe/filter.pipe';
     BsDatepickerModule.forRoot(),
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
+    BsDropdownModule.forRoot(),
     NgxGalleryModule
   ],
   providers: [],
