@@ -2,6 +2,7 @@
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,7 @@ namespace api.Controllers
             this.mapper = mapper;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllCities()
         {
             var cities = await uow.CityRepository.GetCities();
@@ -26,6 +28,7 @@ namespace api.Controllers
             return Ok(cityDto);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddCity(CityDto citydto)
         {
             var city = mapper.Map<City>(citydto);

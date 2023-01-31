@@ -13,7 +13,8 @@ namespace api.Data
             optionsBuilder.UseSqlServer("Server=.;Database=backend;Trusted_Connection=true;TrustServerCertificate=true");
         }
 
-        public DbSet<City> Cities { get; set; } 
-
+        public DbSet<City> Cities { get; set; }
+        public DbSet<User> Users { get; set; }
+        
     }
 }
