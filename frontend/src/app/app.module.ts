@@ -12,7 +12,7 @@ import { AddPropertyComponent } from './Components/add-property/add-property.com
 import { LoginComponent } from './User/login/login.component';
 import { RegisterComponent } from './User/register/register.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule} from '@angular/common/http'
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http'
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
@@ -20,6 +20,7 @@ import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { SortPipe } from './Pipe/sort.pipe';
 import { FilterPipe } from './Pipe/filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TokenInterceptor } from './token.interceptor';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     BsDropdownModule.forRoot(),
     NgxGalleryModule
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
