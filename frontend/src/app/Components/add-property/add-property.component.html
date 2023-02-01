@@ -30,7 +30,7 @@
                       *ngFor="let bhk of [1,2,3,4]"
                       class="btn btn-outline-primary mr-2"
                       [btnRadio]="bhk" tabindex="0" role="button"
-                      (click)="propertyView.BHK=bhk"
+                      (click)="propertyView.bhk=bhk"
                       name="BHK">
                       {{bhk}}
                     </label>
@@ -45,7 +45,7 @@
                     *ngFor="let ptype of propertyTypes"
                     class="btn btn-outline-primary mr-2"
                     [btnRadio]="ptype" tabindex="0" role="button"
-                    (click)="propertyView.PType=ptype"
+                    (click)="propertyView.propertyType=ptype"
                     name="PropType">{{ptype}}
                   </label>
                   </div>
@@ -58,7 +58,7 @@
                   <label
                     *ngFor="let ftype of furnishType"
                     class="btn btn-outline-primary mr-2"
-                    (click)="propertyView.FType=ftype"
+                    (click)="propertyView.furnishingType=ftype"
                     [btnRadio]="ftype" tabindex="0" role="button"
                     name="FurnishType">
                     {{ftype}}
@@ -69,7 +69,7 @@
                 <div class="form-group col-12">
                   <label>in Building/Society/Project</label>
                   <input type="text" class="form-control" #propName
-                  (keyup)="propertyView.Name=propName.value"
+                  (keyup)="propertyView.name=propName.value"
                   formControlName="Name">
 
                 </div>
@@ -77,7 +77,7 @@
                 <div class="form-group col-12">
                   <label>City</label>
                   <select #City
-                  (click)="propertyView.City=City.value"
+                  (click)="propertyView.city=City.value"
                   class="form-control"
                   formControlName="City">
                   <option value=''>--Select City--</option>
@@ -101,7 +101,7 @@
                     <label *ngIf="fc.BasicInfo.SellRent==2">Rent (in USD)</label>
                     <input type="text" class="form-control"
                     formControlName="Price" #price
-                    (keyup)="propertyView.Price= +price.value">
+                    (keyup)="propertyView.price= +price.value">
                   </div>
 
                   <div *ngIf="fc.BasicInfo.SellRent==2">
@@ -124,7 +124,7 @@
                     <label>Built Area (in Sqr Feet)</label>
                     <input type="text"
                     class="form-control" #builtArea
-                    (keyup)="propertyView.BuiltArea= +builtArea.value"
+                    (keyup)="propertyView.builtArea= +builtArea.value"
                     formControlName="BuiltArea">
                   </div>
 
@@ -190,13 +190,13 @@
                   formControlName="RTM">
                     <label class="btn btn-outline-primary mr-2"
                       btnRadio=true tabindex="0" role="button"
-                      (click)="propertyView.RTM= true"
+                      (click)="propertyView.readyToMove= true"
                       name="RTM">Yes
                     </label>
 
                     <label class="btn btn-outline-primary"
                       btnRadio=false  tabindex="0" role="button"
-                      (click)="propertyView.RTM=false"
+                      (click)="propertyView.readyToMove=false"
                       name="RTM">No
                     </label>
                   </div>
@@ -204,8 +204,8 @@
 
 
                 <div class="form-group col-6">
-                  <label *ngIf="propertyView.RTM">Establishment Date</label>
-                  <label *ngIf="!propertyView.RTM">Possession Date</label>
+                  <label *ngIf="propertyView.readyToMove">Establishment Date</label>
+                  <label *ngIf="!propertyView.readyToMove">Possession Date</label>
                   <input type="text"
                   class="form-control"
                   formControlName="PossessionOn"

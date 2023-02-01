@@ -1,8 +1,7 @@
 ﻿namespace api.Models
 {
-    public class City: BaseEntity
+    public class PropertyType: BaseEntity
     {
         public string Name { get; set; }
-        public string Country { get; set; }
     }
 }

@@ -14,16 +14,16 @@ export class AddPropertyComponent {
   addProp!:FormGroup;
   cities!:any[];
   propertyView:IPropertyBase={
-    Id: 0,
-    SellRent: 0,
-    Name: '',
-    PType: '',
-    FType: '',
-    Price: 0,
-    BHK: 0,
-    BuiltArea: 0,
-    City: '',
-    RTM: false,
+    id: 0,
+    sellRent: 0,
+    name: '',
+    propertyType: '',
+    furnishingType: '',
+    price: 0,
+    bhk: 0,
+    builtArea: 0,
+    city: '',
+    readyToMove: false,
     Image: ''
   }
   propertyTypes:Array<string>=["House","APARTMET","Duplex"];

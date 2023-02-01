@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Property } from 'src/app/model/property';
 import { HouseService } from 'src/app/Services/house.service';
 
 @Component({
@@ -9,16 +10,26 @@ import { HouseService } from 'src/app/Services/house.service';
 })
 export class PropertyListComponent {
 
-  properties:Array<any>=[]
+  properties:Array<Property>=[]
   filteredValue = '';
   SearchCity = '';
   SortbyParam = '';
   SortDirection = 'asc';
   constructor(houseService:HouseService,route:ActivatedRoute){
       if(route.snapshot.url.toString())
-      this.properties = houseService.SellOrRent(2);
+      {
+        houseService.SellOrRent(2).subscribe((property)=>{
+          this.properties = property;
+        })
+      }
+      
       else
-      this.properties = houseService.SellOrRent(1);
+      {
+        houseService.SellOrRent(1).subscribe((property)=>{
+          this.properties = property;
+        })
+      }
+      
       }
 
       onCityFilterClear() {
