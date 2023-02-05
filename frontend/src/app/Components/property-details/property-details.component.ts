@@ -4,18 +4,23 @@ import { HouseService } from 'src/app/Services/house.service';
 import {NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {NgxGalleryImage} from '@kolkov/ngx-gallery';
 import {NgxGalleryAnimation} from '@kolkov/ngx-gallery';
+import { Property } from 'src/app/model/property';
 @Component({
   selector: 'app-property-details',
   templateUrl: './property-details.component.html',
   styleUrls: ['./property-details.component.scss']
 })
 export class PropertyDetailsComponent {
-  property:any;
+  property!:Property;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
   constructor(route:ActivatedRoute,houseService:HouseService){
     route.params.subscribe((param)=>{
-      this.property = houseService.GetHouseById(param.id);
+      houseService.GetHouseProperty(param.id).subscribe((property) =>{
+        this.property = property;
+        this.property.age = houseService.getYearDifference((property.estPossessionOn!).toString()); 
+
+      })
     })
 
     this.galleryOptions = [

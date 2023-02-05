@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { properties } from 'src/data';
+import { IPairValueKey } from '../model/IPairValueKey';
 import { Property } from '../model/property';
 
 @Injectable({
@@ -20,10 +21,29 @@ export class HouseService {
   GetAllHouse(){
     return properties;
   }
+  getPropertyType():Observable<IPairValueKey[]>{
+    return this.http.get<IPairValueKey[]>(`${this.api}propertytype`);
+  }
+  getfurnishingType():Observable<IPairValueKey[]>{
+    return this.http.get<IPairValueKey[]>(`${this.api}furnishingtype`);
+  }
   SellOrRent(SR:number){
     return this.http.get<Property[]>(`${this.api}Property/type/${SR}`);
   }
-  GetHouseById(id:number){
-    return this.GetAllHouse().find(house=>house.Id == id);
+  AddProperty(property:Property){
+    return this.http.post(`${this.api}Property/add`,property);
   }
+  GetHouseProperty(id:number):Observable<Property>{
+  return this.http.get<Property>(`${this.api}Property/detail/${id}`);
+}
+getYearDifference(date: string): string {
+  const oneYear = 1000 * 60 * 60 * 24 * 365;
+  const now = new Date();
+  const est = new Date(date);
+  const differenceInMs = Math.abs(now.getTime() - est.getTime());
+  const diff = Math.floor(differenceInMs / oneYear);
+  if(diff == 0)
+    return "less then year";
+  return diff.toString();
+}
 }
