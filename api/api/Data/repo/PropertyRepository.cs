@@ -45,5 +45,13 @@ namespace api.Data.repo
             .FirstAsync();
             return properties;
         }
+        public async Task<Property> GetPropertyByIdAsync(int id)
+        {
+            var properties = await dc.Properties
+            .Include(p => p.Photos)
+            .Where(p => p.Id == id)
+            .FirstAsync();
+            return properties;
+        }
     }
 }

@@ -15,11 +15,13 @@ namespace api.Controllers
     {
         private readonly IUnitOfWork uow;
         private readonly IMapper mapper;
+        private readonly IPhotoService photoService;
 
-        public PropertyController(IUnitOfWork uow, IMapper mapper)
+        public PropertyController(IUnitOfWork uow, IMapper mapper, IPhotoService photoService)
         {
             this.uow = uow;
             this.mapper = mapper;
+            this.photoService = photoService;
         }
         [HttpGet("type/{sellrent}")]
         [AllowAnonymous]
@@ -48,7 +50,30 @@ namespace api.Controllers
             await uow.SaveAsync();
             return Ok(property);
         }
-        private int GetAuth()
+        [HttpPost("add/photo/{id}")]
+        [Authorize]
+        public async Task<IActionResult> AddPropertyPhoto(IFormFile file,int id)
+        {
+            var result = await photoService.UploadPhotoAsync(file);
+            if (result.Error != null)
+                return BadRequest(result.Error.Message);
+
+            var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
+
+            var photo = new Photo
+            {
+                ImageUrl = result.SecureUrl.AbsoluteUri,
+                PublicId = result.PublicId
+            };
+            if(property.Photos.Count == 0)
+            {
+                photo.IsPrimaty = true;
+            }
+            property.Photos.Add(photo);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+            private int GetAuth()
         {
             return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         }

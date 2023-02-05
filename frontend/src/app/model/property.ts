@@ -1,4 +1,5 @@
 import { IPropertyBase } from "./ipropertyBase";
+import { Photo } from "./photo";
 
 export class Property implements IPropertyBase {
     id!: number;
@@ -28,4 +29,6 @@ export class Property implements IPropertyBase {
     photo?: string;
     description?: string;
     image?:string
+    photos?: Photo[];
+
 }

@@ -120,6 +120,7 @@ mapProperty(): void {
   this.property.estPossessionOn = new Date(this.fc.OtherInfo.PossessionOn);
   this.property.description = this.fc.OtherInfo.Description;
 }
+
   selectTab(tabId: number) {
       this.formTabs.tabs[tabId].active = true;
   }

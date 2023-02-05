@@ -2,6 +2,7 @@ using api.Data;
 using api.Data.repo;
 using api.Helpers;
 using api.Interfaces;
+using api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,7 +30,8 @@ builder.Services.AddSwaggerGen(options =>
 });
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+builder.Services.AddScoped<IPhotoService, PhotoService>();
 var secretkey = builder.Configuration.GetSection("AppSettings:Key").Value;
 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretkey));
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

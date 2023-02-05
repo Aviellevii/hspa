@@ -12,6 +12,7 @@ import { Property } from 'src/app/model/property';
 })
 export class PropertyDetailsComponent {
   property!:Property;
+  public mainurl!:string;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
   constructor(route:ActivatedRoute,houseService:HouseService){
@@ -20,46 +21,33 @@ export class PropertyDetailsComponent {
         this.property = property;
         this.property.age = houseService.getYearDifference((property.estPossessionOn!).toString()); 
 
+        this.galleryOptions = [
+          {
+            width: '100%',
+            height: '465px',
+            thumbnailsColumns: 4,
+            imageAnimation: NgxGalleryAnimation.Slide
+          },
+
+        ];
+
+        this.galleryImages = this.getPropertyPhotos();
       })
     })
-
-    this.galleryOptions = [
-      {
-        width: '100%',
-        height: '465px',
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide
-      },
-      // max-width 800
-     
-    ];
-
-    this.galleryImages = [
-      {
-        small: '../../../assets/internal-1.jpg',
-        medium: '../../../assets/internal-1.jpg',
-        big: '../../../assets/internal-1.jpg'
-      },
-      {
-        small: '../../../assets/internal-2.jpg',
-        medium: '../../../assets/internal-2.jpg',
-        big: '../../../assets/internal-2.jpg'
-      },
-      {
-        small: '../../../assets/internal-3.jpg',
-        medium: '../../../assets/internal-3.jpg',
-        big: '../../../assets/internal-3.jpg'
-      },{
-        small: '../../../assets/internal-4.jpg',
-        medium: '../../../assets/internal-4.jpg',
-        big: '../../../assets/internal-4.jpg'
-      },
-      {
-        small: '../../../assets/internal-5.jpg',
-        medium: '../../../assets/internal-5.jpg',
-        big: '../../../assets/internal-5.jpg'
-      }
-    ];
+  }
+  getPropertyPhotos(): NgxGalleryImage[] {
+    const photoUrls: NgxGalleryImage[] = [];
+    for (const photo of this.property.photos!) {
+      if(photo.isPrimary) {this.mainurl = photo.imageUrl}
+            photoUrls.push(
+                {
+                    small: photo.imageUrl,
+                    medium: photo.imageUrl,
+                    big: photo.imageUrl
+                }
+            );
+    }
+    return photoUrls;
   }
 }
 
