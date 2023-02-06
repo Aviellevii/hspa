@@ -1,6 +1,6 @@
 <div class="card">
-    <img *ngIf="property.Image" src="../../../assets/{{property.Image}}.png" alt="" class="propImg">
-    <img *ngIf="!property.Image" src="../../../assets/house_default.png" alt="" class="propImg">
+    <img *ngIf="property.photo" src="{{property.photo}}" alt="" class="propImg">
+    <img *ngIf="!property.photo" src="../../../assets/house_default.png" alt="" class="propImg">
 
     <div *ngIf="hiddenIcon" class="d-flex justify-content-center mt-2">
         <button class="btn btn-danger"><i class="fas fa-trash"></i></button>

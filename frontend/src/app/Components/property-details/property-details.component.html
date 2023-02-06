@@ -1,9 +1,9 @@
-<div class="row shadow">
+<div class="row shadow" *ngIf="property">
     <div class="col-sm-4 p-0">
       <div class="card">
         <div class="card-img-wrapper">
-          <img *ngIf="mainurl" class="card-img-top" src="{{mainurl}}">
-          <img *ngIf="!mainurl" class="card-img-top" src="assets/images/house_default.png">
+          <img *ngIf="mainphotoUrl" class="card-img-top" src="{{mainphotoUrl}}">
+          <img *ngIf="!mainphotoUrl" class="card-img-top" src="../../../assets/house_default.png">
         </div>
         <div class="card-body">
           <h1 class="card-title">{{property.name}}</h1>
@@ -104,6 +104,9 @@
           </tab>
           <tab heading="Photos">
             <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+          </tab>
+          <tab heading="Edit/Delete Photo">
+            <app-photo-edit [property]="property" (mainPhotoChangedEvent)="changePrimaryPhoto($event)"></app-photo-edit>
           </tab>
           <tab heading="Contact">
             <h1>Contact Detail</h1>

@@ -21,6 +21,7 @@ import { SortPipe } from './Pipe/sort.pipe';
 import { FilterPipe } from './Pipe/filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TokenInterceptor } from './token.interceptor';
+import { PhotoEditComponent } from './Components/photo-edit/photo-edit.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { TokenInterceptor } from './token.interceptor';
     LoginComponent,
     RegisterComponent,
     SortPipe,
-    FilterPipe
+    FilterPipe,
+    PhotoEditComponent
   ],
   imports: [
     BrowserModule,

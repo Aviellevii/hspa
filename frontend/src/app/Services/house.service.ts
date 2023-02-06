@@ -33,6 +33,12 @@ export class HouseService {
   AddProperty(property:Property){
     return this.http.post(`${this.api}Property/add`,property);
   }
+  SetPrimary(propId:number,photoPublicId:string){
+    return this.http.post(`${this.api}Property/set-primary-photo/${propId}/${photoPublicId}`,{})
+  }
+  DeletePhoto(propId:number,photoPublicId:string){
+    return this.http.delete(`${this.api}Property/delete-photo/${propId}/${photoPublicId}`)
+  }
   GetHouseProperty(id:number):Observable<Property>{
   return this.http.get<Property>(`${this.api}Property/detail/${id}`);
 }

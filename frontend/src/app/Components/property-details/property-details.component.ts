@@ -12,7 +12,7 @@ import { Property } from 'src/app/model/property';
 })
 export class PropertyDetailsComponent {
   property!:Property;
-  public mainurl!:string;
+  public mainphotoUrl!:string;
   galleryOptions!: NgxGalleryOptions[];
   galleryImages!: NgxGalleryImage[];
   constructor(route:ActivatedRoute,houseService:HouseService){
@@ -20,7 +20,6 @@ export class PropertyDetailsComponent {
       houseService.GetHouseProperty(param.id).subscribe((property) =>{
         this.property = property;
         this.property.age = houseService.getYearDifference((property.estPossessionOn!).toString()); 
-
         this.galleryOptions = [
           {
             width: '100%',
@@ -35,19 +34,24 @@ export class PropertyDetailsComponent {
       })
     })
   }
-  getPropertyPhotos(): NgxGalleryImage[] {
-    const photoUrls: NgxGalleryImage[] = [];
-    for (const photo of this.property.photos!) {
-      if(photo.isPrimary) {this.mainurl = photo.imageUrl}
-            photoUrls.push(
-                {
-                    small: photo.imageUrl,
-                    medium: photo.imageUrl,
-                    big: photo.imageUrl
-                }
-            );
+  changePrimaryPhoto(url:string){
+    this.mainphotoUrl = url;
+  }
+  getPropertyPhotos():NgxGalleryImage[]{
+    const PhotoUrl: NgxGalleryImage[] = [];
+    for(var photo of this.property.photos!){
+      if(photo.isPrimaty) this.mainphotoUrl = photo.imageUrl;
+      else{
+        PhotoUrl.push(
+          {
+            small: photo.imageUrl,
+            medium:  photo.imageUrl,
+            big:  photo.imageUrl
+          }
+        );
+      }
     }
-    return photoUrls;
+    return PhotoUrl;
   }
 }
 

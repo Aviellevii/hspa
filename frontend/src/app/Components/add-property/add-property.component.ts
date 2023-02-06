@@ -29,8 +29,7 @@ export class AddPropertyComponent {
     bhk: 0,
     builtArea: 0,
     city: '',
-    readyToMove: false,
-    Image: ''
+    readyToMove: false
   }
   propertyTypes!:Array<IPairValueKey>;
   furnishType!:Array<IPairValueKey>;
