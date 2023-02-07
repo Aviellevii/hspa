@@ -52,7 +52,7 @@ namespace api.Controllers
         }
         [HttpPost("add/photo/{id}")]
         [Authorize]
-        public async Task<IActionResult> AddPropertyPhoto(IFormFile file,int id)
+        public async Task<ActionResult<PhotoDto>> AddPropertyPhoto(IFormFile file,int id)
         {
             var result = await photoService.UploadPhotoAsync(file);
             if (result.Error != null)
@@ -70,8 +70,8 @@ namespace api.Controllers
                 photo.IsPrimaty = true;
             }
             property.Photos.Add(photo);
-            await uow.SaveAsync();
-            return StatusCode(201);
+            if (await uow.SaveAsync()) return mapper.Map<PhotoDto>(photo);
+            return BadRequest("Some Problem occured in uploading the photo please retry");
         }
         [HttpPost("set-primary-photo/{propId}/{photoPublicId}")]
         [Authorize]

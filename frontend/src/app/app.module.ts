@@ -22,6 +22,7 @@ import { FilterPipe } from './Pipe/filter.pipe';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TokenInterceptor } from './token.interceptor';
 import { PhotoEditComponent } from './Components/photo-edit/photo-edit.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PhotoEditComponent } from './Components/photo-edit/photo-edit.component
     TabsModule.forRoot(),
     ButtonsModule.forRoot(),
     BsDropdownModule.forRoot(),
-    NgxGalleryModule
+    NgxGalleryModule,
+    FileUploadModule
   ],
   providers: [
     {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true },
