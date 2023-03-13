@@ -23,6 +23,9 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TokenInterceptor } from './token.interceptor';
 import { PhotoEditComponent } from './Components/photo-edit/photo-edit.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { GlobalErrorInterceptor } from './global-error.interceptor';
+import { LoadingComponent } from './Components/loading/loading.component';
+import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     RegisterComponent,
     SortPipe,
     FilterPipe,
-    PhotoEditComponent
+    PhotoEditComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +57,10 @@ import { FileUploadModule } from 'ng2-file-upload';
     FileUploadModule
   ],
   providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:LoadingInterceptor, multi: true },
     {provide:HTTP_INTERCEPTORS, useClass:TokenInterceptor, multi: true },
+    {provide:HTTP_INTERCEPTORS, useClass:GlobalErrorInterceptor, multi: true },
+
   ],
   bootstrap: [AppComponent]
 })

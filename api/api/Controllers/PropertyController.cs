@@ -31,6 +31,18 @@ namespace api.Controllers
             var propertylist = mapper.Map<IEnumerable<PropertyListDto>>(properties);
             return Ok(propertylist);
         }
+
+        [HttpGet("dashboard")]
+        [Authorize]
+        public async Task<IActionResult> GetMyPropertyList()
+        {
+            var userId = GetAuth();
+            var properties = await uow.PropertyRepository.GetPropertyByIdUserAsync();
+            var myproperty = properties.Where(p => p.PostedBy == userId);
+            var propertylist = mapper.Map<IEnumerable<PropertyListDto>>(myproperty);
+            return Ok(propertylist);
+        }
+
         [HttpGet("detail/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetPropertyDetails(int id)
@@ -59,7 +71,9 @@ namespace api.Controllers
                 return BadRequest(result.Error.Message);
 
             var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
-
+            var userId = GetAuth();
+            if(property.PostedBy != userId)
+                return StatusCode(401);
             var photo = new Photo
             {
                 ImageUrl = result.SecureUrl.AbsoluteUri,
@@ -138,11 +152,21 @@ namespace api.Controllers
 
             return BadRequest("Failed to delete photo");
         }
-
+        [HttpDelete("delete/{id}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteList(int id){
+             var userId = GetAuth();
+             var property = await uow.PropertyRepository.GetPropertyByIdAsync(id);
+             if(property.PostedBy != userId)
+                return BadRequest("You not Athurize to do this Action");
+            uow.PropertyRepository.DeleteProperty(id);
+            await uow.SaveAsync();
+            return Ok(id);             
+        }
 
         private int GetAuth()
         {
-            return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
         }
 
     }

@@ -3,8 +3,8 @@
     <img *ngIf="!property.photo" src="../../../assets/house_default.png" alt="" class="propImg">
 
     <div *ngIf="hiddenIcon" class="d-flex justify-content-center mt-2">
-        <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-        <button class="btn btn-primary ms-2" routerLink="property-details/{{property.id}}"><i class="fas fa-edit"></i></button>
+        <button class="btn btn-danger" (click)="delete(property.id)"><i class="fas fa-trash"></i></button>
+        <button class="btn btn-primary ms-2" routerLink="property/-details/{{property.id}}"><i class="fas fa-edit"></i></button>
     </div>
     <div class="card-body p-1">
         <h1 class="mb-0"> {{property.bhk}} BHK {{property.propertyType}} </h1>

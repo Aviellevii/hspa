@@ -4,8 +4,8 @@
 
 <label>Sort by &nbsp;</label>
 <select [(ngModel)] = 'SortbyParam'>
-  <option value="City">City</option>
-  <option value="Price">Price</option>
+  <option value="city">City</option>
+  <option value="price">Price</option>
 </select>
 <button type="button" (click) = "onSortDirection()">
   <i *ngIf="SortDirection==='asc'" class="fas fa-sort-alpha-down"></i>
@@ -14,6 +14,6 @@
 
 <div class="row">
     <div class="shadow-lg col-sm-4 p-3" *ngFor="let property of properties | filter:filteredValue|sort:[SortbyParam,SortDirection]">
-        <app-property-card [hiddenIcon]="true" [property]="property"></app-property-card>
+        <app-property-card [hiddenIcon]="true" [property]="property" (deleteProp)="deleteProperty($event)"></app-property-card>
     </div>
 </div>

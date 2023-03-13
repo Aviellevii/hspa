@@ -18,7 +18,8 @@ namespace api.Data.repo
 
         public void DeleteProperty(int id)
         {
-            throw new NotImplementedException();
+            var property = dc.Properties.Find(id);
+            dc.Properties.Remove(property);
         }
 
         public async Task<IEnumerable<Property>> GetPropertiesAsync(int sellrent)
@@ -51,6 +52,17 @@ namespace api.Data.repo
             .Include(p => p.Photos)
             .Where(p => p.Id == id)
             .FirstOrDefaultAsync();
+            return properties;
+        }
+
+        public async Task<IEnumerable<Property>> GetPropertyByIdUserAsync()
+        {
+              var properties = await dc.Properties
+                .Include(p => p.PropertyType)
+                .Include(p => p.City)
+                .Include(p => p.FurnishingType)
+                .Include(p => p.Photos)
+                .ToListAsync();
             return properties;
         }
     }

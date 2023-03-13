@@ -9,16 +9,27 @@
           <div class="form-group col-12">
               <label for="name" class="form-label">Name</label>
               <input type="text" class="form-control" formControlName="Name">
+              <div class="error-list" *ngIf="fc.Name.errors && isSubmit">
+                <span class="error" *ngIf="fc.Name.errors.required">Name is Required</span>
+              </div>
           </div>
   
           <div class="form-group col-12">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control" formControlName="Email">
+            <div class="error-list" *ngIf="fc.Email.errors && isSubmit">
+              <span class="error" *ngIf="fc.Email.errors.required">Email is Required</span>
+              <span class="error" *ngIf="fc.Email.errors.email">Please enter right email syntax</span>
+            </div>
           </div>
   
           <div class="form-group col-12">
             <label for="passwrod" class="form-label">Password</label>
             <input type="text" class="form-control" formControlName="Password">
+            <div class="error-list" *ngIf="fc.Password.errors && isSubmit">
+              <span class="error" *ngIf="fc.Password.errors.required">Password is Required</span>
+              <span class="error" *ngIf="fc.Password.errors.minlength">Password need minimum 8 char</span>
+            </div>
           </div>
   
           <div class="form-group col-12">
@@ -29,11 +40,15 @@
           <div class="form-group col-12">
             <label for="mobile" class="form-label">Mobile</label>
             <input type="text" class="form-control" formControlName="Mobile">
+            <div class="error-list" *ngIf="fc.Mobile.errors && isSubmit">
+              <span class="error" *ngIf="fc.Mobile.errors.required">Mobile is Required</span>
+              <span class="error" *ngIf="fc.Mobile.errors.maxlength">Mobile need maximum 10 char</span>
+            </div>
           </div>
   
-          <div class="form-group col-12">
+          <div class="form-group col-12 mt-3">
             <button type="submit" class="btn btn-primary">Save</button>
-            <button type="reset" class="btn btn-secondary ml-2" (click)="cancel()">Cancel</button>
+            <button type="reset" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
           </div>
         </form>
       </div>

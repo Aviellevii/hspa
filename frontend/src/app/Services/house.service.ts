@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { properties } from 'src/data';
 import { IPairValueKey } from '../model/IPairValueKey';
 import { Property } from '../model/property';
@@ -30,6 +30,9 @@ export class HouseService {
   SellOrRent(SR:number){
     return this.http.get<Property[]>(`${this.api}Property/type/${SR}`);
   }
+  GetMyProp(){
+    return this.http.get<Property[]>(`${this.api}Property/dashboard`);
+  }
   AddProperty(property:Property){
     return this.http.post(`${this.api}Property/add`,property);
   }
@@ -42,6 +45,9 @@ export class HouseService {
   GetHouseProperty(id:number):Observable<Property>{
   return this.http.get<Property>(`${this.api}Property/detail/${id}`);
 }
+DeleteHouseProperty(id:number){
+  return this.http.delete(`${this.api}Property/delete/${id}`);
+}
 getYearDifference(date: string): string {
   const oneYear = 1000 * 60 * 60 * 24 * 365;
   const now = new Date();
@@ -52,4 +58,6 @@ getYearDifference(date: string): string {
     return "less then year";
   return diff.toString();
 }
+
+
 }

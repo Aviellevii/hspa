@@ -11,16 +11,22 @@
           <div class="form-group col-12">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control" formControlName="Email">
+            <div class="error-list" *ngIf="fc.Email.errors && isSubmit">
+              <span class="error" *ngIf="fc.Email.errors.required">Email is Required</span>
+            </div>
           </div>
   
           <div class="form-group col-12">
             <label for="passwrod" class="form-label">Password</label>
             <input type="text" class="form-control" formControlName="Password">
+            <div class="error-list" *ngIf="fc.Password.errors && isSubmit">
+              <span class="error" *ngIf="fc.Password.errors.required">Password is Required</span>
+            </div>
           </div>
 
-          <div class="form-group col-12">
+          <div class="form-group col-12 mt-3">
             <button type="submit" class="btn btn-primary">Login</button>
-            <button type="reset" class="btn btn-secondary ml-2" (click)="cancel()">Cancel</button>
+            <button type="reset" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
           </div>
         </form>
       </div>

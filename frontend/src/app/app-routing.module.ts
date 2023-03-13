@@ -10,9 +10,11 @@ import { RegisterComponent } from './User/register/register.component';
 const routes: Routes = [
   {path:'',component:PropertyListComponent},
   {path:'rent',component:PropertyListComponent},
+  {path:'dashboard',component:PropertyListComponent},
   {path:'add-property',component:AddPropertyComponent,canActivate:[AuthGuard]},
   {path:'property-details/:id',component:PropertyDetailsComponent},
   {path:'rent/property-details/:id',component:PropertyDetailsComponent},
+  {path:'dashboard/property-details/:id',component:PropertyDetailsComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
 

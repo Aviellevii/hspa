@@ -1,10 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FileUploader } from 'ng2-file-upload';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IPairValueKey } from 'src/app/model/IPairValueKey';
 import { IPropertyBase } from 'src/app/model/ipropertyBase';
 import { Property } from 'src/app/model/property';
+import { AccountService } from 'src/app/Services/account.service';
 import { AlertifyService } from 'src/app/Services/alertify.service';
 import { HouseService } from 'src/app/Services/house.service';
 
@@ -13,11 +15,11 @@ import { HouseService } from 'src/app/Services/house.service';
   templateUrl: './add-property.component.html',
   styleUrls: ['./add-property.component.scss']
 })
-export class AddPropertyComponent {
+export class AddPropertyComponent{
   @ViewChild('formTabs') formTabs!: TabsetComponent;
   addProp!:FormGroup;
   property = new Property();
-
+  isSubmit:boolean = false;
   cities!:any[];
   propertyView:IPropertyBase={
     id: 0,
@@ -33,7 +35,10 @@ export class AddPropertyComponent {
   }
   propertyTypes!:Array<IPairValueKey>;
   furnishType!:Array<IPairValueKey>;
-  constructor(fb:FormBuilder,private houseService:HouseService,private router:Router,private alertify:AlertifyService){
+
+  uploader!:FileUploader;
+  maxAllowedFileSize=10*1024*1024;
+  constructor(fb:FormBuilder,private houseService:HouseService,private router:Router,private alertify:AlertifyService,private accountService:AccountService){
     houseService.getPropertyType().subscribe((propertyTypes)=>{
       this.propertyTypes = propertyTypes;
     })
@@ -78,23 +83,67 @@ export class AddPropertyComponent {
       })
   });
   }
+
   get fc(){
     return this.addProp.value;
   }
+
+  //Get Form Group
   get BasicInfo() {
-    return this.addProp.controls.BasicInfo;
+    return this.addProp.controls.BasicInfo as FormGroup;
 }
 
 get PriceInfo() {
-    return this.addProp.controls.PriceInfo;
+    return this.addProp.controls.PriceInfo as FormGroup;
 }
 
 get AddressInfo() {
-    return this.addProp.controls.AddressInfo;
+    return this.addProp.controls.AddressInfo as FormGroup;
 }
 
 get OtherInfo() {
-    return this.addProp.controls.OtherInfo;
+    return this.addProp.controls.OtherInfo as FormGroup;
+}
+
+//Get Form Control
+get BhkValid(){
+  return this.BasicInfo.controls.BHK;
+}
+
+get PTypeValid(){
+  return this.BasicInfo.controls.PType;
+}
+
+get FTypeValid(){
+  return this.BasicInfo.controls.FType;
+}
+
+get NameValid(){
+  return this.BasicInfo.controls.Name;
+}
+
+get CityValid(){
+  return this.BasicInfo.controls.City;
+}
+
+get PriceValid(){
+  return this.PriceInfo.controls.Price;
+}
+
+get BuiltAreaValid(){
+  return this.PriceInfo.controls.BuiltArea;
+}
+
+get AddressValid(){
+  return this.AddressInfo.controls.Address;
+}
+
+get RTMValid(){
+  return this.OtherInfo.controls.RTM;
+}
+
+get PossessionOnValid(){
+  return this.OtherInfo.controls.PossessionOn;
 }
 mapProperty(): void {
   this.property.sellRent = +this.fc.BasicInfo.SellRent;
@@ -120,10 +169,23 @@ mapProperty(): void {
   this.property.description = this.fc.OtherInfo.Description;
 }
 
-  selectTab(tabId: number) {
-      this.formTabs.tabs[tabId].active = true;
+
+selectTab(NextTabId: number, IsCurrentTabValid: boolean) {
+  this.isSubmit = true;
+  if (IsCurrentTabValid) {
+      this.formTabs.tabs[NextTabId].active = true;
   }
+}
+
+
+
   onSubmit(){
+    if(this.addProp.invalid)
+    {
+      this.isSubmit = true;
+      this.alertify.error('Please feel all required filed')
+      return;
+    }
     this.mapProperty()
     this.houseService.AddProperty(this.property).subscribe((property:any)=>{
       if(property.sellRent == 1)

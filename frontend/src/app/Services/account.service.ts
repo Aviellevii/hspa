@@ -12,7 +12,7 @@ export class AccountService {
 
   private readonly api;
   private userSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
-  private userObservable:Observable<User>;
+  public userObservable:Observable<User>;
   constructor(private http:HttpClient,private alertify:AlertifyService) {
     this.api = 'https://localhost:7221/api/Account';
     this.userObservable = this.userSubject.asObservable();
@@ -28,7 +28,7 @@ export class AccountService {
         next:(User)=>{
           this.SetUserToLocalStorage(User);
           this.userSubject.next(User);
-          this.alertify.success(`Welcome ${User.username}`);
+          this.alertify.success(`Welcome ${User.userName}`);
         },error:()=>{
           this.alertify.error('login failed');
         }

@@ -10,14 +10,14 @@ import { AccountService } from 'src/app/Services/account.service';
 })
 export class RegisterComponent {
   registerForm!:FormGroup;
-
+  isSubmit:boolean = false;
   constructor(fb:FormBuilder,private accountService:AccountService,private router:Router){
     this.registerForm = fb.group({
       Name:['',Validators.required],
-      Email:['',Validators.required],
-      Password:['',Validators.required],
+      Email:['',[Validators.required,Validators.email]],
+      Password:['',[Validators.required,Validators.minLength(8)]],
       ConfirmPassword:['',Validators.required],
-      Mobile:['',Validators.required],
+      Mobile:['',[Validators.required,Validators.maxLength(10)]],
     })
   }
 
@@ -25,6 +25,12 @@ export class RegisterComponent {
     return this.registerForm.controls;
   }
   register(){
+    console.log(this.registerForm);
+    if(this.registerForm.invalid){
+      this.isSubmit = true;
+      return;
+    }
+
     this.accountService.register({username:this.registerForm.value.Email,password:this.registerForm.value.Password}).subscribe(()=>{
       this.router.navigateByUrl('/login');
     })

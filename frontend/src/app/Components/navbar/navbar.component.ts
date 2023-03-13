@@ -7,9 +7,11 @@ import { AccountService } from 'src/app/Services/account.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-  loggedinUser:string;
+  loggedinUser!:string;
   constructor(private account:AccountService){
-    this.loggedinUser = account.curnnetUser.userName;
+    account.userObservable.subscribe((user)=>{
+      this.loggedinUser = user.userName
+    })
   }
   onLogout(){
     this.account.logout();

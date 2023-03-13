@@ -7,11 +7,11 @@ export class FilterPipe implements PipeTransform {
 
   transform(value: any, filteredValue:string ) {
     if(value){
-      if(filteredValue === ''){
+      if(filteredValue === '' ){
         return value;
       }
   
-      const cities = value.filter((val:any) => val.City.toLowerCase().includes(filteredValue.toLocaleLowerCase()));
+      const cities = value.filter((val:any) => val.city?.toLowerCase().includes(filteredValue.toLocaleLowerCase()));
       return cities;
   
     }

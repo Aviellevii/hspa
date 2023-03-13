@@ -1,8 +1,10 @@
 import { Component,EventEmitter,Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Photo } from 'src/app/model/photo';
 import { Property } from 'src/app/model/property';
 import { AccountService } from 'src/app/Services/account.service';
+import { AlertifyService } from 'src/app/Services/alertify.service';
 import { HouseService } from 'src/app/Services/house.service';
 
 @Component({
@@ -15,7 +17,8 @@ export class PhotoEditComponent implements OnInit{
   @Output() mainPhotoChangedEvent = new EventEmitter<string>();
   uploader!:FileUploader;
   maxAllowedFileSize=10*1024*1024;
-  constructor(private houeseService:HouseService,private accountService:AccountService){
+  constructor(private houeseService:HouseService,private accountService:AccountService,private alertify:AlertifyService
+    ,private router:Router){
 
   }
   ngOnInit(): void {
@@ -32,7 +35,6 @@ export class PhotoEditComponent implements OnInit{
       autoUpload:true,
       maxFileSize:this.maxAllowedFileSize
     });
-
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
     }
@@ -42,6 +44,21 @@ export class PhotoEditComponent implements OnInit{
         this.property.photos?.push(photo);
       }
     }
+
+    this.uploader.onErrorItem = (item, response, status, headers) => {
+      let errorMessage = 'Some unknown error occured';
+      if (status===401) {
+          errorMessage ='Your session has expired, login again';
+          this.router.navigateByUrl('/login')
+      }
+
+      if (response) {
+          errorMessage = response;
+      }
+
+      this.alertify.error(errorMessage);
+  };
+
   }
 
   mainPhotoChanged(url:string){

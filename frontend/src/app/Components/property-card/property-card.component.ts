@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IPropertyBase } from 'src/app/model/ipropertyBase';
 
 @Component({
@@ -9,4 +9,10 @@ import { IPropertyBase } from 'src/app/model/ipropertyBase';
 export class PropertyCardComponent {
   @Input() property!:IPropertyBase;
   @Input() hiddenIcon!:boolean;
+  @Output() deleteProp = new EventEmitter<number>();
+
+
+  delete(id:number){
+    this.deleteProp.emit(id);
+  }
 }
